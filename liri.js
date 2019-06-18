@@ -15,9 +15,15 @@ function App(command, params) {
         case "spotify-this-song":
             getSpotify(params);
             break;
+        case "movie-this":
+            getMovie(params);
+            break;
+        case "concert-this":
 
+            
         default:
             console.log("liri does not know that command, please try again.");
+        
     }
 }
 // Spotify retrieval
@@ -44,15 +50,44 @@ function getSpotify(songName) {
         }
     });
 }
+// Bands retrieval
+function getConcert(artistName) {
+    // 
+    axios.get("https://rest.bandsintown.com/artists/" + artistName + "/events?app_id=codingbootcamp").then(
+  function(response) {
+    // Then we print out the imdbRating
+    console.log("The movie's title is: " + response.data.Title);
+    console.log("The movie's release date is: " + response.data.imdbRating);
+    console.log("The movie's rating is: " + response.data.imdbRating);
+  });
+    // request('http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&r=json', function (error, response, body) {
+    //     console.log('error:', error);
+    //     console.log('statusCode:', response && response.statusCode);
+    //     console.log('body:', body);
+    // });
+}
 
 // OMDB retrieval
-var getMovie = function (movieName) {
+function getMovie(movieName) {
+    var queryUrl= "https://www.omdbapi.com/?t="+movieName+"&y=&plot=short&apikey=trilogy"
     // OMDB request
-    request('http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&r=json', function (error, response, body) {
-        console.log('error:', error);
-        console.log('statusCode:', response && response.statusCode);
-        console.log('body:', body);
-    });
+    axios.get("http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy").then(
+  function(response) {
+    // Then we print out the imdbRating
+    console.log("The movie's title is: " + response.data.Title);
+    console.log("The movie's release date is: " + response.data.imdbRating);
+    console.log("The movie's rating is: " + response.data.imdbRating);
+    console.log("The movie's rotten tomatoes rating is: " + response.data.Ratings[1].Value);
+    console.log("The movie's country of origin: " + response.data.Country);
+    console.log("The movie's language is: " + response.data.Language);
+    console.log("The movie's plot is: " + response.data.Plot);
+    console.log("The movie's actor(s) is: " + response.data.Actors);
+  });
+    // request('http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&r=json', function (error, response, body) {
+    //     console.log('error:', error);
+    //     console.log('statusCode:', response && response.statusCode);
+    //     console.log('body:', body);
+    // });
 }
 
 // takes in all of the command line arguments
