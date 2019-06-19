@@ -19,8 +19,8 @@ function App(command, params) {
             getMovie(params);
             break;
         case "concert-this":
-
-            
+            getConcert(params);
+            break;   
         default:
             console.log("liri does not know that command, please try again.");
         
@@ -55,10 +55,13 @@ function getConcert(artistName) {
     // 
     axios.get("https://rest.bandsintown.com/artists/" + artistName + "/events?app_id=codingbootcamp").then(
   function(response) {
+      var concerts = response.data;
+      for (let i = 0; i < concerts.length; i++) {
     // Then we print out the imdbRating
-    console.log("The movie's title is: " + response.data.Title);
-    console.log("The movie's release date is: " + response.data.imdbRating);
-    console.log("The movie's rating is: " + response.data.imdbRating);
+    console.log("The name of concert venue is: " + concerts[i].venue.name);
+    console.log("The location of venue is: " + concerts[i].venue.city);
+    console.log("The date of the event is: " + concerts[i].datetime);
+      }
   });
     // request('http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&r=json', function (error, response, body) {
     //     console.log('error:', error);
